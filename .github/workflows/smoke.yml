@@ -4,6 +4,17 @@ on:
   push:
     branches: [ main ]
   pull_request:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to run tests'
+        required: true
+        default: 'stg'
+        type: choice
+        options:
+          - stg
+          - preprod
+          - prod
 
 jobs:
   tests:
@@ -23,7 +34,7 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
-      - name: Run Smoke Tests on STG
+      - name: Run Smoke Tests on ${{ inputs.environment || 'stg' }}
         run: npm run test:smoke
         env:
-          ENV: stg
+          ENV: ${{ inputs.environment || 'stg' }}
