@@ -46,3 +46,27 @@ jobs:
           name: cucumber-report-${{ inputs.environment || 'stg' }}
           path: reports/cucumber-report.html
           retention-days: 30
+
+      - name: Send Test Report via Email
+        if: always()
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: ${{ secrets.MAIL_SERVER }}
+          server_port: ${{ secrets.MAIL_PORT }}
+          username: ${{ secrets.MAIL_USERNAME }}
+          password: ${{ secrets.MAIL_PASSWORD }}
+          subject: "Smoke Test Report - ${{ inputs.environment || 'stg' }} - Run #${{ github.run_number }}"
+          to: ${{ secrets.MAIL_TO }}
+          from: ${{ secrets.MAIL_FROM }}
+          body: |
+            Smoke Tests Completed!
+            
+            Environment: ${{ inputs.environment || 'stg' }}
+            Run Number: ${{ github.run_number }}
+            Branch: ${{ github.ref_name }}
+            
+            Test Report HTML is attached.
+            
+            Repository: ${{ github.repository }}
+            Commit: ${{ github.sha }}
+          attachments: reports/cucumber-report.html
