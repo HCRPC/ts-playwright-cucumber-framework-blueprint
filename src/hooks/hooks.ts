@@ -10,10 +10,10 @@ Before(async function (this: CustomWorld) {
   // Select browser based on env var
   let browser;
   if (browserType.toLowerCase() === 'firefox') {
-    browser = await firefox.launch({ headless: false });
+    browser = await firefox.launch({ headless: true });
   } else {
     // default to chromium
-    browser = await chromium.launch({ headless: false });
+    browser = await chromium.launch({ headless: true });
   }
 
   this.browser = browser;
