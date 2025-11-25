@@ -38,3 +38,11 @@ jobs:
         run: npm run test:smoke
         env:
           ENV: ${{ inputs.environment || 'stg' }}
+
+      - name: Upload Test Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cucumber-report-${{ inputs.environment || 'stg' }}
+          path: reports/cucumber-report.html
+          retention-days: 30
