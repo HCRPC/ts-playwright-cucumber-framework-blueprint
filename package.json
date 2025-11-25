@@ -1,0 +1,23 @@
+{
+  "name": "ts-playwright-cucumber-framework",
+  "version": "1.0.0",
+  "description": "Sample QA automation framework using TypeScript, Playwright and Cucumber with multi-environment config.",
+  "scripts": {
+    "test:stg": "cross-env ENV=stg cucumber-js -p default",
+    "test:preprod": "cross-env ENV=preprod cucumber-js -p default",
+    "test:prod": "cross-env ENV=prod cucumber-js -p default",
+    "test": "npm run test:stg",
+    "test:smoke": "cross-env ENV=stg cucumber-js -p smoke"
+  },
+  "devDependencies": {
+    "@cucumber/cucumber": "^10.0.0",
+    "@types/node": "^22.0.0",
+    "cross-env": "^7.0.3",
+    "playwright": "^1.48.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.0"
+  },
+  "dependencies": {
+    "expect": "^30.2.0"
+  }
+}

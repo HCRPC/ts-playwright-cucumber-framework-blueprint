@@ -1,0 +1,6 @@
+{
+  "name": "stg",
+  "baseUrl": "https://www.saucedemo.com/",
+  "validUser": "standard_user",
+  "validPassword": "secret_sauce"
+}

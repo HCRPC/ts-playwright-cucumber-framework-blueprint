@@ -1,0 +1,6 @@
+{
+  "name": "preprod",
+  "baseUrl": "https://www.saucedemo.com/",
+  "validUser": "problem_user",
+  "validPassword": "secret_sauce"
+}

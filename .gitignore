@@ -1,0 +1,36 @@
+# Dependencies
+node_modules/
+package-lock.json
+yarn.lock
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Build
+dist/
+build/
+*.tsbuildinfo
+
+# Test Reports & Screenshots
+reports/
+test-results/
+screenshots/
+*.png
+*.jpg
+*.jpeg
+
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Temp files
+*.tmp
+*.temp
+*.log
+
