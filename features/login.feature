@@ -4,7 +4,7 @@ Feature: Login
   I want to login with valid and invalid credentials
   So that I can access the products page or see an error message
 
-  @smoke @ui
+  @smoke @ui @acceptance
   Scenario: Successful login on STG / PREPROD / PROD
     Given I open the login page
     When I login with valid credentials
