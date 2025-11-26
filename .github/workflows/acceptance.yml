@@ -1,0 +1,73 @@
+name: Acceptance Tests
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to run tests'
+        required: true
+        default: 'prod'
+        type: choice
+        options:
+          - stg
+          - preprod
+          - prod
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
+
+      - name: Run Acceptance Tests on ${{ inputs.environment || 'prod' }}
+        run: npm run test:acceptance
+        env:
+          ENV: ${{ inputs.environment || 'prod' }}
+
+      - name: Upload Test Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cucumber-report-acceptance-${{ inputs.environment || 'prod' }}
+          path: reports/cucumber-report.html
+          retention-days: 30
+
+      - name: Send Test Report via Email
+        if: always()
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: ${{ secrets.MAIL_SERVER }}
+          server_port: ${{ secrets.MAIL_PORT }}
+          username: ${{ secrets.MAIL_USERNAME }}
+          password: ${{ secrets.MAIL_PASSWORD }}
+          subject: "Acceptance Test Report - ${{ inputs.environment || 'prod' }} - Run #${{ github.run_number }}"
+          to: ${{ secrets.MAIL_TO }}
+          from: ${{ secrets.MAIL_FROM }}
+          body: |
+            Acceptance Tests Completed!
+            
+            Environment: ${{ inputs.environment || 'prod' }}
+            Run Number: ${{ github.run_number }}
+            Branch: ${{ github.ref_name }}
+            
+            Test Report HTML is attached.
+            
+            Repository: ${{ github.repository }}
+            Commit: ${{ github.sha }}
+          attachments: reports/cucumber-report.html
+

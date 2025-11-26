@@ -7,7 +7,8 @@
     "test:preprod": "cross-env ENV=preprod cucumber-js -p default",
     "test:prod": "cross-env ENV=prod cucumber-js -p default",
     "test": "npm run test:stg",
-    "test:smoke": "cross-env ENV=stg cucumber-js -p smoke"
+    "test:smoke": "cross-env ENV=stg cucumber-js -p smoke",
+    "test:acceptance": "cross-env ENV=prod cucumber-js -p acceptance"
   },
   "devDependencies": {
     "@cucumber/cucumber": "^10.0.0",

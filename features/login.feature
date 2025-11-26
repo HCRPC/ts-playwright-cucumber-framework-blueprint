@@ -16,7 +16,7 @@ Feature: Login
     When I login with username "invalid_user" and password "wrong_password"
     Then I should see a login error message
 
-  @Negative
+  @Negative @acceptance
   Scenario: Test should fail to see screenshots
     Given I open the login page
     When I login with username "invalid_user" and password "wrong_password"
